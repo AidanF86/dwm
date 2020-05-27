@@ -42,9 +42,9 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
+	{ "T",      tile },    /* first entry is default */
+	{ "F",      NULL },    /* no layout function means floating behavior */
+	{ "M",      monocle },
 };
 
 /* key definitions */
@@ -63,13 +63,13 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *firefox[] = { "firefox", NULL };
-static const char *inc_brightness[] = { "sudo", "sh", "/home/aidanfoley/Documents/Scripts/inc_brightness.sh", NULL };
-static const char *dec_brightness[] = { "sudo", "sh", "/home/aidanfoley/Documents/Scripts/dec_brightness.sh", NULL };
-static const char *inc_volume[] = { "amixer", "set", "Master", "3dB+", NULL };
-static const char *dec_volume[] = { "amixer", "set", "Master", "3dB-", NULL };
-static const char *i3_lock[] = { "i3lock", "-i", "/home/aidanfoley/Downloads/dishes.png", NULL };
-static const char *rt_portrait[] = { "sh", "/home/aidanfoley/Documents/Scripts/rt_portrait.sh", NULL };
-static const char *rt_landscape[] = { "sh", "/home/aidanfoley/Documents/Scripts/rt_landscape.sh", NULL };
+static const char *inc_brightness[] = { "sudo", "sh", "/home/aidan/scripts/inc_brightness.sh", NULL };
+static const char *dec_brightness[] = { "sudo", "sh", "/home/aidan/scripts/dec_brightness.sh", NULL };
+static const char *inc_volume[] = { "amixer", "set", "Master", "2%+", NULL };
+static const char *dec_volume[] = { "amixer", "set", "Master", "2%-", NULL };
+static const char *i3_lock[] = { "sh", "/home/aidan/scripts/lockbg.sh", NULL };
+static const char *rt_portrait[] = { "sh", "/home/aidan/scripts/rt_portrait.sh", NULL };
+static const char *rt_landscape[] = { "sh", "/home/aidan/scripts/rt_landscape.sh", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -107,8 +107,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY, 			XK_minus,  setgaps,	   {.i = -5 } },
-	{ MODKEY, 			XK_equal,  setgaps,	   {.i = +5 } },
+	{ MODKEY, 			XK_minus,  setgaps,	   {.i = -10 } },
+	{ MODKEY, 			XK_equal,  setgaps,	   {.i = +10 } },
 	{ MODKEY|ShiftMask, 		XK_equal,  setgaps,	   {.i = 0 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
