@@ -3,7 +3,7 @@
 #include <X11/XF86keysym.h>
 
 /* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int gappx	    = 20;	/* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
@@ -63,44 +63,39 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *firefox[] = { "firefox", NULL };
-static const char *inc_brightness[] = { "sudo", "sh", "/home/aidan/scripts/inc_brightness.sh", NULL };
-static const char *dec_brightness[] = { "sudo", "sh", "/home/aidan/scripts/dec_brightness.sh", NULL };
+static const char *discord[] = { "discord", NULL };
+static const char *steam[] = { "steam", NULL };
 static const char *inc_volume[] = { "amixer", "set", "Master", "2%+", NULL };
 static const char *dec_volume[] = { "amixer", "set", "Master", "2%-", NULL };
-static const char *i3_lock[] = { "sh", "/home/aidan/scripts/lockbg.sh", NULL };
-static const char *rt_portrait[] = { "sh", "/home/aidan/scripts/rt_portrait.sh", NULL };
-static const char *rt_landscape[] = { "sh", "/home/aidan/scripts/rt_landscape.sh", NULL };
+static const char *lock_screen[] = { "lockbg", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask,		XK_b,	   spawn, 	   {.v = firefox} },
-        { MODKEY|ShiftMask,		XK_x,	   spawn,	   {.v = i3_lock} },
-        { 0,				XF86XK_MonBrightnessUp,  	   spawn,	   {.v = inc_brightness} },
-        { 0,				XF86XK_MonBrightnessDown,  	   spawn,	   {.v = dec_brightness} }, 
+	{ MODKEY,                       XK_x,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,             		XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,			XK_z,	   spawn, 	   {.v = firefox} },
+	{ MODKEY,			XK_d,	   spawn, 	   {.v = discord} },
+ 	{ MODKEY,			XK_s,	   spawn, 	   {.v = steam} },
+        { MODKEY|ShiftMask,    		XK_x,	   spawn,	   {.v = lock_screen} },
         { 0,				XF86XK_AudioRaiseVolume,	   spawn,	   {.v = inc_volume} }, 
         { 0,				XF86XK_AudioLowerVolume,  	   spawn,	   {.v = dec_volume} }, 
-	{ MODKEY|ShiftMask,		XK_p,	   spawn,	   {.v = rt_portrait} },
-	{ MODKEY|ShiftMask,		XK_l,	   spawn,	   {.v = rt_landscape} },
 
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_u       incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
+	{ MODKEY,                       XK_space, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY|ShiftMask,             XK_f,  togglefullscr, {0} },
+	{ MODKEY,  		        XK_q,      killclient,     {0} },
+	{ MODKEY|ShiftMask,             XK_t,      setlayout,      {.v = &layouts[0]} },
+	{ MODKEY|ShiftMask,             XK_f,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY|ShiftMask,             XK_m,      setlayout,      {.v = &layouts[2]} },
+//	{ MODKEY,                       XK_space,  setlayout,      {0} },
+//	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+	{ MODKEY, 	                XK_f,  togglefullscr, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
