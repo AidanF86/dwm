@@ -33,6 +33,7 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+    { "St",       NULL,       "Calculator", 0,          1,           -1 },
 };
 
 /* layout(s) */
@@ -63,26 +64,30 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *firefox[] = { "firefox", NULL };
-static const char *inc_brightness[] = { "sudo", "sh", "/home/aidan/scripts/inc_brightness.sh", NULL };
-static const char *dec_brightness[] = { "sudo", "sh", "/home/aidan/scripts/dec_brightness.sh", NULL };
-static const char *inc_volume[] = { "amixer", "set", "Master", "2%+", NULL };
-static const char *dec_volume[] = { "amixer", "set", "Master", "2%-", NULL };
-static const char *i3_lock[] = { "sh", "/home/aidan/scripts/lockbg.sh", NULL };
-static const char *rt_portrait[] = { "sh", "/home/aidan/scripts/rt_portrait.sh", NULL };
-static const char *rt_landscape[] = { "sh", "/home/aidan/scripts/rt_landscape.sh", NULL };
+static const char *discord[] = { "discord", NULL };
+static const char *calculator[] = { "st", "-t", "Calculator", "-f", "monospace:size=18", "-g", "60x30+520+150", "bc", "-q", NULL };
+static const char *inc_volume[] = { "amixer", "set", "Master", "2%+", "&&", "pkill", "-RTMIN+10", "dwmblocks", NULL };
+static const char *dec_volume[] = { "amixer", "set", "Master", "2%-", "&&", "pkill", "-RTMIN+10", "dwmblocks", NULL };
+static const char *i3_lock[] = { "lockbg", NULL };
+static const char *suspend[] = { "lockbg", "-s", NULL };
+static const char *wallp_menu[] = {"wallp", "-d", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask,		XK_b,	   spawn, 	   {.v = firefox} },
-        { MODKEY|ShiftMask,		XK_x,	   spawn,	   {.v = i3_lock} },
-        { 0,				XF86XK_MonBrightnessUp,  	   spawn,	   {.v = inc_brightness} },
-        { 0,				XF86XK_MonBrightnessDown,  	   spawn,	   {.v = dec_brightness} }, 
-        { 0,				XF86XK_AudioRaiseVolume,	   spawn,	   {.v = inc_volume} }, 
-        { 0,				XF86XK_AudioLowerVolume,  	   spawn,	   {.v = dec_volume} }, 
-	{ MODKEY|ShiftMask,		XK_p,	   spawn,	   {.v = rt_portrait} },
-	{ MODKEY|ShiftMask,		XK_l,	   spawn,	   {.v = rt_landscape} },
+	{ MODKEY|ShiftMask,	        	XK_b,	   spawn, 	   {.v = firefox} },
+	{ MODKEY|ShiftMask,     		XK_d,	   spawn,	   {.v = discord} },
+    { MODKEY|ShiftMask,	         	XK_x,	   spawn,	   {.v = i3_lock} },
+    { MODKEY|ShiftMask,             XK_s,      spawn,      {.v = suspend} },
+	{ MODKEY|ShiftMask,	        	XK_a,	   spawn,	   {.v = calculator} },
+    { 0,		 XF86XK_AudioRaiseVolume,      spawn,	   SHCMD("amixer set Master 2%+;  pkill -RTMIN+10 dwmblocks") }, 
+    { 0,		 XF86XK_AudioLowerVolume,      spawn,	   SHCMD("amixer set Master 2%-;  pkill -RTMIN+10 dwmblocks") }, 
+    { MODKEY|ShiftMask,             XK_w,      spawn,           {.v = wallp_menu} },
+    { 0,             XF86XK_AudioPlay, spawn,       SHCMD("mpc toggle") },
+    { 0,             XF86XK_AudioPrev, spawn,  SHCMD("mpc prev") },
+    { 0,             XF86XK_AudioNext, spawn,  SHCMD("mpc next") },
+    { 0,             XF86XK_AudioStop, spawn,  SHCMD("mpc stop") },
 
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
