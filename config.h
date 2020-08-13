@@ -17,7 +17,7 @@ static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
 static const char col_whiteblue[]     = "#0088AA";
-static const unsigned int baralpha = 0xa0;
+static const unsigned int baralpha = 0xff;
 static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
@@ -40,12 +40,14 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
+	/* class     instance  title       tags mask   isfloating   isterminal   monitor */
 	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1 },
 	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
-	{ "St",      NULL,     NULL,           0,         0,          1,           0,        -1 },
-    { "St",      NULL,     "Calculator",   0,         1,          1,           0         -1 },
+	{ "St",      NULL,     NULL,           0,         0,          0,           0,        -1 },
+    { "St",      NULL,     "Calculator",   0,         1,          0,           0         -1 },
+    { "St",      NULL,     "Gotop",        0,         1,          0,           0,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
+    { NULL,      NULL,     "Game Window",  0,         1,          0,           0,        -1 },
 
 };
 
@@ -76,25 +78,20 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
-static const char *firefox[] = { "firefox", NULL };
-static const char *discord[] = { "discord", NULL };
-static const char *calculator[] = { "st", "-t", "Calculator", "-f", "monospace:size=18", "-g", "60x30+520+150", "bc", "-q", NULL };
-static const char *i3_lock[] = { "lockbg", NULL };
-static const char *suspend[] = { "lockbg", "-s", NULL };
-static const char *wallp_menu[] = {"wallp", "-d", NULL };
 
 static Key keys[] = {
 	/* modifier                     key                              function           argument */
 	{ MODKEY,                       XK_p,                            spawn,             {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return,                       spawn,             {.v = termcmd } },
-	{ MODKEY|ShiftMask,	        	XK_b,	                         spawn,             {.v = firefox} },
-	{ MODKEY|ShiftMask,     		XK_d,	                         spawn,             {.v = discord} },
-    { MODKEY|ShiftMask,	         	XK_x,	                         spawn,             {.v = i3_lock} },
-    { MODKEY|ShiftMask,             XK_s,                            spawn,             {.v = suspend} },
-	{ MODKEY|ShiftMask,	        	XK_a,	                         spawn,             {.v = calculator} },
+	{ MODKEY|ShiftMask,	        	XK_b,	                         spawn,             SHCMD("firefox") },
+	{ MODKEY|ShiftMask,     		XK_d,	                         spawn,             SHCMD("discord") },
+    { MODKEY|ShiftMask,	         	XK_x,	                         spawn,             SHCMD("slock") },
+    { MODKEY|ShiftMask,             XK_s,                            spawn,             SHCMD("slock & systemctl suspend") },
+	{ MODKEY|ShiftMask,	        	XK_a,	                         spawn,             SHCMD("st -t Calculator -f monospace:size=18 -g 60x30+520+150 bc -q") },
+    { MODKEY|ShiftMask,             XK_t,                            spawn,             SHCMD("st -t Gotop -g 150x60+300+100 gotop") },
     { 0,		                    XF86XK_AudioRaiseVolume,         spawn,             SHCMD("amixer set Master 2%+;  pkill -RTMIN+10 dwmblocks") }, 
     { 0,		                    XF86XK_AudioLowerVolume,         spawn,             SHCMD("amixer set Master 2%-;  pkill -RTMIN+10 dwmblocks") }, 
-    { MODKEY|ShiftMask,             XK_w,                            spawn,             {.v = wallp_menu} },
+    { MODKEY|ShiftMask,             XK_w,                            spawn,             SHCMD("wallp -d") },
     { 0,                            XF86XK_AudioPlay,                spawn,             SHCMD("mpc toggle") },
     { 0,                            XF86XK_AudioPrev,                spawn,             SHCMD("mpc prev") },
     { 0,                            XF86XK_AudioNext,                spawn,             SHCMD("mpc next") },
