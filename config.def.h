@@ -3,7 +3,7 @@
 #include <X11/XF86keysym.h>
 
 /* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int borderpx  = 20;        /* border pixel of windows */
 static const unsigned int gappx	    = 20;	/* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
@@ -16,13 +16,15 @@ static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
-static const char col_whiteblue[]     = "#0088AA";
-static const unsigned int baralpha = 0xff;
-static const unsigned int borderalpha = OPAQUE;
+static const char col_whiteblue[]   = "#0088AA";
+static const char col_gold[]        = "#D79921";
+static const char col_darkergold[]  = "#A56600";
+static const unsigned int baralpha = 0xAA;
+static const unsigned int borderalpha = 0xFF;
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray1 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_whiteblue  },
+	[SchemeSel]  = { col_gray4, col_darkergold,  col_gold  },
 };
 static const unsigned int alphas[][3]      = {
 	/*               fg      bg        border     */
