@@ -3,7 +3,7 @@
 #include <X11/XF86keysym.h>
 
 /* appearance */
-static const unsigned int borderpx  = 4;        /* border pixel of windows */
+static const unsigned int borderpx  = 0;        /* border pixel of windows */
 static const unsigned int gappx     = 50;        /* gaps between windows */
 static const unsigned int gapinc    = 10;       /* amount to increment gaps */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -33,14 +33,14 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor    scratch key*/
-	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1,        0 },
-	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1,        0 },
-	{ "st",      NULL,     NULL,           0,         0,          1,           0,        -1,        's' },
-	{ "Steam",   NULL,     NULL,           0,         0,          0,           1,        -1,        0},
-    { NULL,      NULL,     "Game Window",  0,         1,          0,           1,        -1,        0 },
-    { NULL, "Godot_Engine",NULL,           0,         1,          0,           1,        -1,        0 },
-	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1,        0 }, /* xev */
+	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
+	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1 },
+	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
+	{ "st",      NULL,     NULL,           0,         0,          1,           0,        -1 },
+	{ "Steam",   NULL,     NULL,           0,         0,          0,           1,        -1 },
+        { NULL,      NULL,     "Game Window",  0,         1,          0,           1,        -1 },
+        { NULL, "Godot_Engine",    NULL,     0,         1,          0,           1,        -1 },
+	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
 
 /* layout(s) */
